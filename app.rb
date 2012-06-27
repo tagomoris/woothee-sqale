@@ -1,16 +1,24 @@
 require 'sinatra'
+require 'haml'
 
 require 'woothee'
+
+require 'cgi'
 require 'json'
 
-get '/' do
-  if params[:x]
-    params[:x]
-  else
-    'Hello World'
-  end
+configure do
+  set :haml, {:escape_html => true}
 end
 
-get '/parse' do
-  Woothee.parse(params[:agent] || '').to_json
+get '/' do
+  @parsed = if params[:a] then Woothee.parse(params[:a])
+            else nil
+            end
+  @agent = request.user_agent
+  @agente = CGI.escape(@agent)
+  haml :index
+end
+
+get '/json', :provides => ['json'] do
+  Woothee.parse(params[:a] || '').to_json
 end

@@ -1,0 +1,29 @@
+%html
+  %title Welcome to Woothee!
+  %body
+    %div
+      Try to pase your UserAgent!
+    %form{:method => 'GET', :action => '/'}
+      %input{:type => 'text', :name => 'a', :value => @agent, :size => 200}
+      %input{:type => 'submit', :value => "parse!"}
+    %div
+      For json data, try
+      %a{:href => "/json?a=#{@agente}"} /json
+      with query parameter 'a'
+    - if @parsed
+      %table
+        %tr
+          %th name
+          %td= @parsed[:name]
+        %tr
+          %th version
+          %td= @parsed[:version]
+        %tr
+          %th category
+          %td= @parsed[:category]
+        %tr
+          %th os
+          %td= @parsed[:os]
+        %tr
+          %th vendor
+          %td= @parsed[:vendor]
