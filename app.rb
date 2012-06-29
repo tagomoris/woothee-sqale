@@ -14,7 +14,7 @@ get '/' do
   @parsed = if params[:a] then Woothee.parse(params[:a])
             else nil
             end
-  @agent = request.user_agent
+  @agent = params[:a] || request.user_agent
   @agente = CGI.escape(@agent)
   haml :index
 end
